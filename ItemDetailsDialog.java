@@ -30,7 +30,7 @@ public class ItemDetailsDialog extends JDialog { // VIEW
         this.currentChange = currentChange; // Set the current change
 
         // Creates and formats the UI components
-        JTextArea textArea = new JTextArea(vendingMachineData);
+        this.textArea = new JTextArea(vendingMachineData);
         textArea.setEditable(false);
         textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
