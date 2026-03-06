@@ -27,8 +27,8 @@ public class SpecialMachineState implements MachineState {
             String vendingMachineData = createVendingMachine.displaySpecVend();
             if (!vendingMachineData.isEmpty()) {
                 while (true) {
-                    Item item = createVendingMachine.specVendMachine.getSlots()[0][0];
-                    double currentChange = createVendingMachine.specVendMachine.currentChange();
+                    Item item = createVendingMachine.getSpecialItem(0);
+                    double currentChange = createVendingMachine.getSpecialCurrentChange();
 
                     new ItemDetailsDialog(item, currentChange, vendingMachineData);
 
@@ -36,9 +36,9 @@ public class SpecialMachineState implements MachineState {
                     int slotNumber = Integer.parseInt(slotInput);
 
                     if (slotNumber != -1) {
-                        if (slotNumber >= 0 && slotNumber < createVendingMachine.specVendMachine.getSlots().length) {
-                            item = createVendingMachine.specVendMachine.getSlots()[slotNumber][0];
-                            currentChange = createVendingMachine.specVendMachine.currentChange();
+                        if (slotNumber >= 0 && slotNumber < createVendingMachine.getSpecialSlotCount()) {
+                            item = createVendingMachine.getSpecialItem(slotNumber);
+                            currentChange = createVendingMachine.getSpecialCurrentChange();
 
                             ItemDetailsDialog itemDetailsDialog = new ItemDetailsDialog(item, currentChange, vendingMachineData);
                             itemDetailsDialog.setVisible(true);
@@ -47,17 +47,15 @@ public class SpecialMachineState implements MachineState {
                             double payment = Double.parseDouble(paymentInput);
 
                             if (payment <= currentChange) {
-                                createVendingMachine.specVendMachine.receivePayment(slotNumber, payment);
+                                createVendingMachine.receiveSpecialPayment(slotNumber, payment);
 
                                 JOptionPane.showMessageDialog(view, "Dispensing " + item.getName() + "..." + " It contains " + item.getCalories() + " calories!");
                                 JOptionPane.showMessageDialog(view, "Transaction Successful!");
                                 JOptionPane.showMessageDialog(view, "You purchased:  " + item.getName());
                                 JOptionPane.showMessageDialog(view, "Here is your change: " + (payment - item.getPriceForControl()));
 
-                                double stock = createVendingMachine.specVendMachine.getStockQuantity(item);
-                                if (stock > 0) {
-                                    // createVendingMachine.specVendMachine.setStockQuantity(item, stock);
-                                } else {
+                                double stock = createVendingMachine.getSpecialStock(item);
+                                if(stock <= 0){
                                     JOptionPane.showMessageDialog(view, "Sorry, " + item.getName() + " is out of stock.");
                                 }
 
