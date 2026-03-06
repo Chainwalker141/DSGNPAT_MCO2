@@ -11,69 +11,18 @@ public class RegularMachineState implements MachineState {
     }
 
     @Override
-    public void handleTestFeatures() {
-        String vendingMachineData = createVendingMachine.displayRegVend();
-        if (!vendingMachineData.isEmpty()) {
-            while (true) { // Infinite loop until the user enters -1
-                // Gets an item from the regular vending machine
-                Item item = createVendingMachine.getRegularItem(0);
-                double currentChange = createVendingMachine.getRegularCurrentChange();
-
-                // Passes the item as an argument to the ItemDetailsDialog constructor
-                new ItemDetailsDialog(item, currentChange, vendingMachineData);
-
-                String slotInput = JOptionPane.showInputDialog(view, "Enter slot number (Slot 1 is 0, Slot 2 is 1, Slot 3 is 2, etc) or -1 to exit:");
-                int slotNumber = Integer.parseInt(slotInput);
-
-                if (slotNumber != -1) {
-                    // Checks if the slot number is valid
-                    if (slotNumber >= 0 && slotNumber < createVendingMachine.getRegularSlotCount()) {
-                        // Gets an item from the specified slot
-                        item = createVendingMachine.getRegularItem(0);
-                        currentChange = createVendingMachine.getRegularCurrentChange();
-
-                        // Passes the item as an argument to the ItemDetailsDialog constructor
-                        ItemDetailsDialog itemDetailsDialog = new ItemDetailsDialog(item, currentChange, vendingMachineData);
-                        itemDetailsDialog.setVisible(true);
-
-                        // Shows a dialog box to get the payment from the user
-                        String paymentInput = JOptionPane.showInputDialog(view, "Enter payment:");
-                        double payment = Double.parseDouble(paymentInput);
-
-                        // Processes the payment for the selected slotNumber
-                        if (payment <= currentChange) {
-                            createVendingMachine.receiveRegularPayment(slotNumber, payment);
-
-                            JOptionPane.showMessageDialog(view, "Dispensing " + item.getName() + "..." + " It contains " + item.getCalories() + " calories!");
-                            JOptionPane.showMessageDialog(view, "Transaction Successful!");
-                            JOptionPane.showMessageDialog(view, "You purchased:  " + item.getName());
-                            JOptionPane.showMessageDialog(view, "Here is your change: " + (payment - item.getPriceForControl()));
-
-                            double stock = createVendingMachine.getRegularStock(item);
-                            
-                            if(stock <= 0){
-                                JOptionPane.showMessageDialog(view, "Sorry, " + item.getName() + " is out of stock.");
-                            }
-
-                            vendingMachineData = createVendingMachine.displayRegVend();
-                            itemDetailsDialog.updateTextArea(vendingMachineData);
-
-                        } else {
-                            JOptionPane.showMessageDialog(view, "There is not enough change available for the transaction...");
-                        }
-
-                    } else {
-                        JOptionPane.showMessageDialog(view, "Invalid slot number. Please enter a valid slot number.");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(view, "Good bye and have a nice day!");
-                    break;
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(view, "Regular vending machine data is empty.");
-        }
+public void handleTestFeatures() {
+    String vendingMachineData = createVendingMachine.displayRegVend();
+    
+    if (vendingMachineData.isEmpty()) {
+        JOptionPane.showMessageDialog(view, "Regular vending machine data is empty.");
+        return;
     }
+
+    // All the logic is now encapsulated in the Context and its States
+    TransactionContext context = new TransactionContext(view, createVendingMachine);
+    context.run();
+}
 
     @Override
     public void handleMaintenance() {
