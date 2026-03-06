@@ -16,8 +16,8 @@ public class RegularMachineState implements MachineState {
         if (!vendingMachineData.isEmpty()) {
             while (true) { // Infinite loop until the user enters -1
                 // Gets an item from the regular vending machine
-                Item item = createVendingMachine.regVendMachine.getSlots()[0][0];
-                double currentChange = createVendingMachine.regVendMachine.currentChange();
+                Item item = createVendingMachine.getRegularItem(0);
+                double currentChange = createVendingMachine.getRegularCurrentChange();
 
                 // Passes the item as an argument to the ItemDetailsDialog constructor
                 new ItemDetailsDialog(item, currentChange, vendingMachineData);
@@ -27,10 +27,10 @@ public class RegularMachineState implements MachineState {
 
                 if (slotNumber != -1) {
                     // Checks if the slot number is valid
-                    if (slotNumber >= 0 && slotNumber < createVendingMachine.regVendMachine.getSlots().length) {
+                    if (slotNumber >= 0 && slotNumber < createVendingMachine.getRegularSlotCount()) {
                         // Gets an item from the specified slot
-                        item = createVendingMachine.regVendMachine.getSlots()[slotNumber][0];
-                        currentChange = createVendingMachine.regVendMachine.currentChange();
+                        item = createVendingMachine.getRegularItem(0);
+                        currentChange = createVendingMachine.getRegularCurrentChange();
 
                         // Passes the item as an argument to the ItemDetailsDialog constructor
                         ItemDetailsDialog itemDetailsDialog = new ItemDetailsDialog(item, currentChange, vendingMachineData);
@@ -42,14 +42,14 @@ public class RegularMachineState implements MachineState {
 
                         // Processes the payment for the selected slotNumber
                         if (payment <= currentChange) {
-                            createVendingMachine.regVendMachine.receivePayment(slotNumber, payment);
+                            createVendingMachine.receiveRegularPayment(slotNumber, payment);
 
                             JOptionPane.showMessageDialog(view, "Dispensing " + item.getName() + "..." + " It contains " + item.getCalories() + " calories!");
                             JOptionPane.showMessageDialog(view, "Transaction Successful!");
                             JOptionPane.showMessageDialog(view, "You purchased:  " + item.getName());
                             JOptionPane.showMessageDialog(view, "Here is your change: " + (payment - item.getPriceForControl()));
 
-                            double stock = createVendingMachine.regVendMachine.getStockQuantity(item);
+                            double stock = createVendingMachine.getRegularStock(item);
                             
                             if(stock <= 0){
                                 JOptionPane.showMessageDialog(view, "Sorry, " + item.getName() + " is out of stock.");

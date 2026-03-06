@@ -190,4 +190,52 @@ public class CreateVendingMachine { // MODEL
         return sb.toString();
     }
 
+    /**
+     * Wrapper methods so that other classes do not touch regVendMachine anymore
+     */
+
+    public Item getRegularItem(int slotNumber) {
+        return regVendMachine.getSlots()[slotNumber][0];
+    }
+
+    public double getRegularCurrentChange() {
+        return regVendMachine.currentChange();
+    }
+
+    public double getRegularStock(Item item) {
+        return regVendMachine.getStockQuantity(item);
+    }
+
+    public void receiveRegularPayment(int slotNumber, double payment) {
+        regVendMachine.receivePayment(slotNumber, payment);
+    }
+
+    public int getRegularSlotCount() {
+        return regVendMachine.getSlots().length;
+    } 
+
+    /**
+     * Additional wrapper methods so other classes do not touch specVendMachine
+     */
+
+    public Item getSpecialItem(int slotNumber) {
+        return specVendMachine.getSlots()[slotNumber][0];
+    }
+
+    public double getSpecialCurrentChange() {
+        return specVendMachine.currentChange();
+    }
+
+    public double getSpecialStock(Item item) {
+        return specVendMachine.getStockQuantity(item);
+    }
+
+    public int getSpecialSlotCount() {
+        return specVendMachine.getSlots().length;
+    }
+
+    public void receiveSpecialPayment(int slotNumber, double payment) {
+        specVendMachine.receivePayment(slotNumber, payment);
+    }
+
 }
