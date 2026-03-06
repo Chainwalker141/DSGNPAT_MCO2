@@ -11,80 +11,10 @@ public class SpecialMachineState implements MachineState {
     }
 
     @Override
-    public void handleTestFeatures() {
-        int customChoice = JOptionPane.showOptionDialog(
-                view,
-                "Choose the type of feature you want",
-                "Special Vending Machine Features",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                new Object[]{"Default Vending Machine Features", "Custom product feature (Burger)"},
-                "Default Vending Machine features"
-        );
-
-        if (customChoice == JOptionPane.YES_OPTION) {
-            String vendingMachineData = createVendingMachine.displaySpecVend();
-            if (!vendingMachineData.isEmpty()) {
-                while (true) {
-                    Item item = createVendingMachine.getSpecialItem(0);
-                    double currentChange = createVendingMachine.getSpecialCurrentChange();
-
-                    new ItemDetailsDialog(item, currentChange, vendingMachineData);
-
-                    String slotInput = JOptionPane.showInputDialog(view, "Enter slot number (Slot 1 is 0, Slot 2 is 1, Slot 3 is 2, etc) or -1 to exit:");
-                    int slotNumber = Integer.parseInt(slotInput);
-
-                    if (slotNumber != -1) {
-                        if (slotNumber >= 0 && slotNumber < createVendingMachine.getSpecialSlotCount()) {
-                            item = createVendingMachine.getSpecialItem(slotNumber);
-                            currentChange = createVendingMachine.getSpecialCurrentChange();
-
-                            ItemDetailsDialog itemDetailsDialog = new ItemDetailsDialog(item, currentChange, vendingMachineData);
-                            itemDetailsDialog.setVisible(true);
-
-                            String paymentInput = JOptionPane.showInputDialog(view, "Enter payment:");
-                            double payment = Double.parseDouble(paymentInput);
-
-                            if (payment <= currentChange) {
-                                createVendingMachine.receiveSpecialPayment(slotNumber, payment);
-
-                                JOptionPane.showMessageDialog(view, "Dispensing " + item.getName() + "..." + " It contains " + item.getCalories() + " calories!");
-                                JOptionPane.showMessageDialog(view, "Transaction Successful!");
-                                JOptionPane.showMessageDialog(view, "You purchased:  " + item.getName());
-                                JOptionPane.showMessageDialog(view, "Here is your change: " + (payment - item.getPriceForControl()));
-
-                                double stock = createVendingMachine.getSpecialStock(item);
-                                if(stock <= 0){
-                                    JOptionPane.showMessageDialog(view, "Sorry, " + item.getName() + " is out of stock.");
-                                }
-
-                                vendingMachineData = createVendingMachine.displaySpecVend();
-                                itemDetailsDialog.updateTextArea(vendingMachineData);
-
-
-                            } else {
-                                JOptionPane.showMessageDialog(view, "There is not enough change available for the transaction...");
-                            }
-
-                        } else {
-                            JOptionPane.showMessageDialog(view, "Invalid slot number. Please enter a valid slot number.");
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(view, "Good bye and have a nice day!");
-                        break;
-                    }
-                }
-            } else {
-                JOptionPane.showMessageDialog(view, "Special vending machine data is empty.");
-            }
-        } else if (customChoice == JOptionPane.NO_OPTION) {
-            // Test the custom product feature
-            createVendingMachine.specVendMachine.createCustomProduct();
-        } else {
-            JOptionPane.showMessageDialog(view, "Please create the chosen vending machine first...");
-        }
-    }
+public void handleTestFeatures() {
+    // Simply launch the state-driven context
+    new SpecialTransactionContext(view, createVendingMachine).run();
+}
 
     @Override
     public void handleMaintenance() {
