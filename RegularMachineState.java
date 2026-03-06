@@ -50,9 +50,8 @@ public class RegularMachineState implements MachineState {
                             JOptionPane.showMessageDialog(view, "Here is your change: " + (payment - item.getPriceForControl()));
 
                             double stock = createVendingMachine.regVendMachine.getStockQuantity(item);
-                            if (stock > 0) {
-                                // createVendingMachine.regVendMachine.setStockQuantity(item, stock);
-                            } else {
+                            
+                            if(stock <= 0){
                                 JOptionPane.showMessageDialog(view, "Sorry, " + item.getName() + " is out of stock.");
                             }
 
