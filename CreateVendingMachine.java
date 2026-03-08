@@ -214,6 +214,29 @@ public class CreateVendingMachine { // MODEL
         return regVendMachine.getSlots().length;
     } 
 
+    public void restockRegularItem(int slot, int itemIndex, int quantity) {
+        regVendMachine.restockItem(slot, itemIndex, quantity);
+    }
+
+    public void setRegularItemPrice(int slot, double price) {
+        regVendMachine.setSlotItemPrice(slot, price);
+    }
+
+    public Money getRegularTotalEarnings() {
+        return regVendMachine.getTotalEarnings();
+    }
+
+    public void replenishRegularChange() {
+        regVendMachine.replenishChange();
+    }
+
+    public void displayRegularSummary() {
+        regVendMachine.displaySummary(
+            regVendMachine.getSlots(),
+            regVendMachine.inventory,
+            regVendMachine.getSales()
+        );
+    }
     /**
      * Additional wrapper methods so other classes do not touch specVendMachine
      */
@@ -238,4 +261,27 @@ public class CreateVendingMachine { // MODEL
         specVendMachine.receivePayment(slotNumber, payment);
     }
 
+    public void restockSpecialItem(int slot, int itemIndex, int quantity) {
+        specVendMachine.restockItem(slot, itemIndex, quantity);
+    }
+
+    public void setSpecialItemPrice(int slot, double price) {
+        specVendMachine.setSlotItemPrice(slot, price);
+    }
+
+    public Money getSpecialTotalEarnings() {
+        return specVendMachine.getTotalEarnings();
+    }
+
+    public void replenishSpecialChange() {
+        specVendMachine.replenishChange();
+    }
+
+    public void displaySpecialSummary() {
+        specVendMachine.displaySummary(
+            specVendMachine.getSlots(),
+            specVendMachine.inventory,
+            specVendMachine.getSales()
+        );
+    }
 }

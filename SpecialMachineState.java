@@ -33,7 +33,7 @@ public void handleTestFeatures() {
                 int stockSelect, numStock;
                 stockSelect = Integer.parseInt(JOptionPane.showInputDialog(view, "Select a slot you want to restock: "));
                 numStock = Integer.parseInt(JOptionPane.showInputDialog(view, "Select number of items you want to restock: "));
-                createVendingMachine.specVendMachine.restockItem(stockSelect, 0, numStock);
+                createVendingMachine.restockSpecialItem(stockSelect, 0, numStock);
                 break;
 
             case 2:
@@ -41,25 +41,21 @@ public void handleTestFeatures() {
                 double stockPrice;
                 slotPrice = Integer.parseInt(JOptionPane.showInputDialog(view, "Which slot do you want to set a price for?\n\nSlots 1 - 8: "));
                 stockPrice = Double.parseDouble(JOptionPane.showInputDialog(view, "Set new price: "));
-                createVendingMachine.specVendMachine.setSlotItemPrice(slotPrice, stockPrice);
+                createVendingMachine.setSpecialItemPrice(slotPrice, stockPrice);
                 break;
 
             case 3:
-                Money totalEarnings = createVendingMachine.specVendMachine.getTotalEarnings();
+                Money totalEarnings = createVendingMachine.getSpecialTotalEarnings();
                 JOptionPane.showMessageDialog(view, "Total earnings: " + totalEarnings.getAmount() + " php");
                 break;
 
             case 4:
-                createVendingMachine.specVendMachine.replenishChange();
+                createVendingMachine.replenishSpecialChange();
                 JOptionPane.showMessageDialog(view, "Change replenished successfully.");
                 break;
 
             case 5:
-                createVendingMachine.specVendMachine.displaySummary(
-                        createVendingMachine.specVendMachine.getSlots(),
-                        createVendingMachine.specVendMachine.inventory,
-                        createVendingMachine.specVendMachine.getSales()
-                );
+                createVendingMachine.displaySpecialSummary();
                 break;
 
             case 6:

@@ -9,9 +9,9 @@ public class SelectingSlotState implements TransactionState {
         if (slot == -1) {
             JOptionPane.showMessageDialog(ctx.view, "Goodbye!");
             ctx.isFinished = true;
-        } else if (slot >= 0 && slot < ctx.createVM.regVendMachine.getSlots().length) {
+        } else if (slot >= 0 && slot < ctx.createVM.getRegularSlotCount()) {
             ctx.selectedSlot = slot;
-            ctx.selectedItem = ctx.createVM.regVendMachine.getSlots()[slot][0];
+            ctx.selectedItem = ctx.createVM.getRegularItem(slot);
             ctx.setState(new ProcessingPaymentState()); // Transition
         } else {
             JOptionPane.showMessageDialog(ctx.view, "Invalid slot!");

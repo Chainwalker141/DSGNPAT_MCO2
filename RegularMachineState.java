@@ -41,7 +41,7 @@ public void handleTestFeatures() {
                 int stockSelect, numStock;
                 stockSelect = Integer.parseInt(JOptionPane.showInputDialog(view, "Select a slot you want to restock: "));
                 numStock = Integer.parseInt(JOptionPane.showInputDialog(view, "Select number of items you want to restock: "));
-                createVendingMachine.regVendMachine.restockItem(stockSelect, 0, numStock);
+                createVendingMachine.restockRegularItem(stockSelect, 0, numStock);
                 stockSelect = Integer.parseInt(JOptionPane.showInputDialog(view, "Restocked " + numStock + " to slot " + numStock));
                 break;
 
@@ -50,25 +50,21 @@ public void handleTestFeatures() {
                 double stockPrice;
                 slotPrice = Integer.parseInt(JOptionPane.showInputDialog(view, "Which slot do you want to set a price for?\n\nSlots 1 - 8: "));
                 stockPrice = Double.parseDouble(JOptionPane.showInputDialog(view, "Set new price: "));
-                createVendingMachine.regVendMachine.setSlotItemPrice(slotPrice, stockPrice);
+                createVendingMachine.setRegularItemPrice(slotPrice, stockPrice);
                 break;
 
             case 3:
-                Money totalEarnings = createVendingMachine.regVendMachine.getTotalEarnings();
+                Money totalEarnings = createVendingMachine.getRegularTotalEarnings();
                 JOptionPane.showMessageDialog(view, "Total earnings: " + totalEarnings.getAmount() + " php");
                 break;
 
             case 4:
-                createVendingMachine.regVendMachine.replenishChange();
+                createVendingMachine.replenishRegularChange();
                 JOptionPane.showMessageDialog(view, "Change replenished successfully.");
                 break;
 
             case 5:
-                createVendingMachine.regVendMachine.displaySummary(
-                        createVendingMachine.regVendMachine.getSlots(),
-                        createVendingMachine.regVendMachine.inventory,
-                        createVendingMachine.regVendMachine.getSales()
-                );
+                createVendingMachine.displayRegularSummary();
                 break;
 
             case 6:
