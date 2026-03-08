@@ -10,16 +10,16 @@ public class RegularMachineState implements MachineState {
         this.createVendingMachine = createVendingMachine;
     }
 
-    @Override
+@Override
 public void handleTestFeatures() {
-    String vendingMachineData = createVendingMachine.displayRegVend();
+    // This call will now trigger ensureRegularInitialized() inside the model
+    String vendingMachineData = createVendingMachine.displayRegVend(); 
     
     if (vendingMachineData.isEmpty()) {
         JOptionPane.showMessageDialog(view, "Regular vending machine data is empty.");
         return;
     }
 
-    // All the logic is now encapsulated in the Context and its States
     TransactionContext context = new TransactionContext(view, createVendingMachine);
     context.run();
 }
