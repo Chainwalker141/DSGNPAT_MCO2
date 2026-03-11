@@ -26,6 +26,10 @@ public void handleTestFeatures() {
                 + "[5] Summary of transactions\n"
                 + "[6] MENU\n\n"
                 + "Your choice: ";
+        
+        String input = JOptionPane.showInputDialog(view, maintenanceMenu);
+        if (input == null) return; // Handle cancel
+        
         int maintenanceChoice = Integer.parseInt(JOptionPane.showInputDialog(view, maintenanceMenu));
 
         switch (maintenanceChoice) {
